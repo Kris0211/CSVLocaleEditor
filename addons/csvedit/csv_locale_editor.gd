@@ -10,7 +10,8 @@ const _DATA_DIR: String = "res://"
 
 ## CSV delimiter used by the editor.
 static var DELIM: String = ProjectSettings.get_setting(
-	EditorTranslationsPlugin.SETTINGS_PREFIX + "csv_delimiter"
+	EditorTranslationsPlugin.SETTINGS_PREFIX + "csv_delimiter",
+	","
 )
 
 #region PRIVATE
