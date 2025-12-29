@@ -1,0 +1,141 @@
+[gd_scene load_steps=4 format=3 uid="uid://c52equsw3ndh2"]
+
+[ext_resource type="Script" uid="uid://caxkgfy4f7c8n" path="res://addons/csvedit/csv_locale_editor.gd" id="1_cgmhc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22rhp"]
+bg_color = Color(0.15686275, 0.1764706, 0.20784314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cjp6"]
+bg_color = Color(0.16862746, 0.21176471, 0.26666668, 1)
+
+[node name="CSVLocaleEditor" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_cgmhc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RibbonContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/RibbonContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create Empty Table"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Load CSV Table"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Save CSV Table"
+
+[node name="CurrentEditLabel" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Currently open: "
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/RibbonContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="SearchBar" type="LineEdit" parent="VBoxContainer/RibbonContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Search..."
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_22rhp")
+
+[node name="HeaderScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="CodeLabelsContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer/HeaderScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AddLocaleButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer/HeaderScrollContainer/CodeLabelsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add New Locale"
+disabled = true
+text = "+"
+
+[node name="BodyScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2cjp6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EntriesContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="AddNewEntryButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 8
+text = "Add New Entry"

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bsarjafshi518"
+
+[deps]
+
+files=["res://examples/weapons.en.translation", "res://examples/weapons.es.translation", "res://examples/weapons.fr.translation", "res://examples/weapons.de.translation"]
+
+source_file="res://examples/weapons.csv"
+dest_files=["res://examples/weapons.en.translation", "res://examples/weapons.es.translation", "res://examples/weapons.fr.translation", "res://examples/weapons.de.translation"]
+
+[params]
+
+compress=true
+delimiter=0
