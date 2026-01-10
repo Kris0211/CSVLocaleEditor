@@ -11,3 +11,6 @@ Create and edit CSV translation tables directly in the Godot editor.
 
 ## Planned features
 - Pasting several entries from Excel into the table, creating missing entries if applicable.
+- Separating tables into pages to speed up the Inspector
+  - Configurable number of entries per page
+- `.po` file format support, including plurals and other advanced features
