@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="csvedit"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 
 [editor_plugins]
 
