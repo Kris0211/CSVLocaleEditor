@@ -69,9 +69,8 @@ func _register_settings():
 		150,
 		TYPE_INT,
 		PROPERTY_HINT_RANGE,
-		"120,750,10"
+		"90,800,10"
 	)
-	
 	
 	_add_setting(
 		"entry_height",
@@ -79,6 +78,14 @@ func _register_settings():
 		TYPE_INT,
 		PROPERTY_HINT_RANGE,
 		"60,400,10"
+	)
+	
+	_add_setting(
+		"key_column_width",
+		150,
+		TYPE_INT,
+		PROPERTY_HINT_RANGE,
+		"80,800,10"
 	)
 	
 	_add_setting(
@@ -115,6 +122,7 @@ func _add_setting(
 func _clear_settings() -> void:
 	ProjectSettings.clear(SETTINGS_PREFIX + "entry_width")
 	ProjectSettings.clear(SETTINGS_PREFIX + "entry_height")
+	ProjectSettings.clear(SETTINGS_PREFIX + "key_column_width")
 	ProjectSettings.clear(SETTINGS_PREFIX + "csv_delimiter")
 	ProjectSettings.save()
 

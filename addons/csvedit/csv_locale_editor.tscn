@@ -64,14 +64,34 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="SearchBar" type="LineEdit" parent="VBoxContainer/RibbonContainer/MarginContainer2" unique_id=1752627087]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SearchBar" type="LineEdit" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Search..."
 clear_button_enabled = true
 select_all_on_focus = true
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=644476673]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Word Wrap"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WordWrapToggle" type="CheckButton" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 

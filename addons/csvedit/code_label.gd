@@ -20,11 +20,12 @@ func _init() -> void:
 	
 	line_edit = LineEdit.new()
 	line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	line_edit.custom_minimum_size = Vector2(150.0, 40.0) - _BUTTON_SIZE
+	line_edit.custom_minimum_size = Vector2(80.0 - _BUTTON_SIZE.x, 40.0)
 	_hbox.add_child(line_edit)
 	
 	button = Button.new()
-	button.custom_minimum_size = Vector2(40.0, 40.0)
+	button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	button.custom_minimum_size = Vector2(20.0, 40.0)
 	button.text = "X"
 	button.flat = true
 	_hbox.add_child(button)
