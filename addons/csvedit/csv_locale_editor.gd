@@ -8,6 +8,8 @@ signal save_finished(success: bool)
 const _CURRENT_EDIT_TEXT: String = "Currently open: "
 const _DATA_DIR: String = "res://"
 
+const KEY_COLUMN_INDEX: int = 1
+
 ## CSV delimiter used by the editor.
 static var DELIM: String = ProjectSettings.get_setting(
 	EditorTranslationsPlugin.SETTINGS_PREFIX + "csv_delimiter",
@@ -40,6 +42,8 @@ var __ur: EditorUndoRedoManager
 
 @onready var _search_bar := %SearchBar as LineEdit
 
+@onready var _word_wrap_toggle := %WordWrapToggle as CheckButton
+
 @onready var _new_code_button := %AddLocaleButton as Button
 @onready var _new_entry_button := %AddNewEntryButton as Button
 
@@ -64,6 +68,7 @@ func _ready() -> void:
 	_load_button.pressed.connect(_on_load_pressed)
 	_save_button.pressed.connect(_on_save_pressed)
 	_search_bar.text_changed.connect(_on_search_performed)
+	_word_wrap_toggle.toggled.connect(_on_word_wrap_toggled)
 	_new_code_button.pressed.connect(_on_add_locale_button_pressed)
 	_new_entry_button.pressed.connect(_on_new_entry_pressed)
 	_header_scroll.get_h_scroll_bar().value_changed.connect(_on_header_h_scroll)
@@ -79,6 +84,7 @@ func _exit_tree() -> void:
 	_create_button.pressed.disconnect(_on_create_pressed)
 	_load_button.pressed.disconnect(_on_load_pressed)
 	_save_button.pressed.disconnect(_on_save_pressed)
+	_word_wrap_toggle.toggled.disconnect(_on_word_wrap_toggled)
 	_search_bar.text_changed.disconnect(_on_search_performed)
 	_new_code_button.pressed.disconnect(_on_add_locale_button_pressed)
 	_new_entry_button.pressed.disconnect(_on_new_entry_pressed)
@@ -134,12 +140,16 @@ func reload_editor_layout() -> void:
 	for l: Node in _code_labels_container.get_children():
 		var _label := l as EditorCodeLabel
 		if _label:
-			_label.set_custom_size(Vector2(
+			var width = \
+				ProjectSettings.get_setting(
+					EditorTranslationsPlugin.SETTINGS_PREFIX + "key_column_width"
+				) \
+				if _label.get_index() == KEY_COLUMN_INDEX else \
 				ProjectSettings.get_setting(
 					EditorTranslationsPlugin.SETTINGS_PREFIX + "entry_width"
-				),
-				40.0
-			))
+				)
+			
+			_label.set_custom_size(Vector2(width, 40.0))
 #endregion
 
 #region EDITOR_SCREEN
@@ -245,6 +255,14 @@ func _show_all_entries() -> void:
 			_entry.set_visible(true)
 #endregion
 
+#region WORD WRAP
+func _on_word_wrap_toggled(p_toggled: bool) -> void:
+	for e: Node in _entries_container.get_children():
+		var _entry := e as EditorLocaleEntry
+		if _entry:
+			_entry.toggle_word_wrap(p_toggled)
+#endregion
+
 #region SCROLL
 func _on_body_h_scroll(p_value: float) -> void:
 	_header_scroll.scroll_horizontal = p_value
@@ -346,15 +364,18 @@ func _create_column(p_code: String, p_index: int = -1) -> void:
 		# Start from 1 since child(0) is a Button
 		_code_labels_container.move_child(_label, p_index + 1)
 	
+	var _label_index := _label.get_index()
 	# Disable deletion of "key" label.
-	_label.button.set_disabled(_label.get_index() == 1)
+	_label.button.set_disabled(_label_index == KEY_COLUMN_INDEX)
 	
-	_label.set_custom_size(Vector2(
-		ProjectSettings.get_setting(
-			EditorTranslationsPlugin.SETTINGS_PREFIX + "entry_width"
-		),
-		40.0
-	))
+	var _width = \
+			ProjectSettings.get_setting(
+				EditorTranslationsPlugin.SETTINGS_PREFIX + "key_column_width" \
+				if _label_index == KEY_COLUMN_INDEX \
+				else EditorTranslationsPlugin.SETTINGS_PREFIX + "entry_width"
+			)
+	
+	_label.set_custom_size(Vector2(_width, 40.0))
 	_label.set_text(p_code)
 	
 	_label.line_edit.text_submitted.connect(

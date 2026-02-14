@@ -17,10 +17,15 @@ var custom_size := Vector2(
 	)
 )
 
+var key_column_width: int = ProjectSettings.get_setting(
+	EditorTranslationsPlugin.SETTINGS_PREFIX + "key_column_width"
+)
+
 var _row_data: PackedStringArray
 var _delete_button: Button
 var _last_edited_cell: TextEdit = null
 var _last_edited_value: String
+var _word_wrap_enabled: bool = true
 
 ## Creates and returns a new instance of [EditorLocaleEntry].
 static func create(p_codes: PackedStringArray, 
@@ -39,10 +44,11 @@ static func create(p_codes: PackedStringArray,
 	
 	this._row_data.resize(p_codes.size())
 	
-	for code: String in p_codes:
+	for i: int in p_codes.size():
+		var code: String = p_codes[i]
 		var _tedit := TextEdit.new()
 		_tedit.custom_minimum_size = this.custom_size
-		_tedit.set_placeholder(code)
+		this._apply_tedit_settings(_tedit, code, i == 0)
 		this.add_child(_tedit)
 		
 		_tedit.focus_entered.connect(this._on_cell_focus_entered.bind(_tedit))
@@ -82,7 +88,6 @@ func get_key_text() -> String:
 		if !_text.is_empty():
 			return _text
 	return "empty key"
-	
 
 
 ## Returns a [PackedStringArray] where each element
@@ -99,13 +104,11 @@ func set_cell_text(p_index: int, p_value: String) -> void:
 		_row_data[p_index] = p_value
 
 
-
 ## Callback for when a column is added.
 func on_locale_added(p_code: String) -> void:
 	var _tedit := TextEdit.new()
+	_apply_tedit_settings(_tedit, p_code, false)
 	add_child(_tedit)
-	_tedit.custom_minimum_size = custom_size
-	_tedit.set_placeholder(p_code)
 	
 	_tedit.focus_entered.connect(_on_cell_focus_entered.bind(_tedit))
 	_tedit.focus_exited.connect(_on_cell_focus_exited.bind(_tedit))
@@ -132,6 +135,16 @@ func on_locale_updated(p_codes: PackedStringArray) -> void:
 			_tedit.set_placeholder(p_codes[i])
 
 
+## Toggles the word wrap for all [TextEdit]s.
+func toggle_word_wrap(p_enabled: bool) -> void:
+	_word_wrap_enabled = p_enabled
+	for i: int in range(1, get_child_count()):
+		var _tedit := get_child(i) as TextEdit
+		if _tedit:
+			_tedit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY \
+					if _word_wrap_enabled else TextEdit.LINE_WRAPPING_NONE
+
+
 ## Refreshes the cell layout to match new settings 
 ## (as denoted in [ProjectSettings]).
 func refresh_layout() -> void:
@@ -144,10 +157,27 @@ func refresh_layout() -> void:
 		)
 	)
 	
-	for t: Node in get_children():
-		var _tedit := t as TextEdit
+	key_column_width = ProjectSettings.get_setting(
+		EditorTranslationsPlugin.SETTINGS_PREFIX + "key_column_width"
+	)
+	
+	for i: int in get_child_count():
+		var _tedit := get_child(i) as TextEdit
 		if _tedit:
-			_tedit.custom_minimum_size = custom_size
+			# button is at 0, first tedit (key) is at 1
+			_apply_tedit_settings(_tedit, _tedit.placeholder_text, i == 1)
+
+
+func _apply_tedit_settings(p_tedit: TextEdit, p_placeholder: String, 
+		p_is_key: bool = false) -> void:
+	p_tedit.placeholder_text = p_placeholder
+	p_tedit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY \
+			if _word_wrap_enabled else TextEdit.LINE_WRAPPING_NONE
+	p_tedit.custom_minimum_size.y = custom_size.y
+	if p_is_key:
+		p_tedit.custom_minimum_size.x = key_column_width
+	else:
+		p_tedit.custom_minimum_size.x = custom_size.x
 
 
 func _on_cell_focus_entered(p_tedit: TextEdit) -> void:
