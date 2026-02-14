@@ -5,7 +5,7 @@ Create and edit CSV translation tables directly in the Godot editor.
 
 ## Features
 - Add, delete, and edit rows and columns with full undo/redo support.
-- Custom CSV loader to open files directly from the FileSystem dock.
+- Custom CSV loader to open files directly from the FileSystem dock. (4.5 only - working on implementing it in 4.6)
 - Search bar to quickly find relevant entries.
 - Adjust column and row sizes, as well as delimiter used in CSV files directly in Project Settings. 
 
