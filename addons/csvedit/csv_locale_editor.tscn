@@ -2,12 +2,6 @@
 
 [ext_resource type="Script" uid="uid://caxkgfy4f7c8n" path="res://addons/csvedit/csv_locale_editor.gd" id="1_cgmhc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22rhp"]
-bg_color = Color(0.11372549, 0.11372549, 0.11372549, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cjp6"]
-bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
-
 [node name="CSVLocaleEditor" type="PanelContainer" unique_id=1129528086]
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,11 +58,11 @@ theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2" unique_id=31234199]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="SearchBar" type="LineEdit" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer"]
+[node name="SearchBar" type="LineEdit" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer" unique_id=2036103497]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -76,47 +70,46 @@ placeholder_text = "Search..."
 clear_button_enabled = true
 select_all_on_focus = true
 
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer" unique_id=1514127645]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=556949252]
 layout_mode = 2
 text = "Word Wrap"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WordWrapToggle" type="CheckButton" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer"]
+[node name="WordWrapToggle" type="CheckButton" parent="VBoxContainer/RibbonContainer/MarginContainer2/HBoxContainer/HBoxContainer" unique_id=2067920021]
 unique_name_in_owner = true
 layout_mode = 2
 button_pressed = true
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1520996310]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=510127354]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=426305717]
+[node name="HeaderPanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=426305717]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_22rhp")
 
-[node name="HeaderScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer" unique_id=1514094117]
+[node name="HeaderScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/HeaderPanelContainer" unique_id=1514094117]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
-[node name="CodeLabelsContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer/HeaderScrollContainer" unique_id=75778985]
+[node name="CodeLabelsContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/HeaderPanelContainer/HeaderScrollContainer" unique_id=75778985]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="AddLocaleButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/PanelContainer/HeaderScrollContainer/CodeLabelsContainer" unique_id=387385590]
+[node name="AddLocaleButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/HeaderPanelContainer/HeaderScrollContainer/CodeLabelsContainer" unique_id=387385590]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add New Locale"
@@ -128,31 +121,31 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer" unique_id=957679804]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_2cjp6")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer" unique_id=2001510956]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="EntriesContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer" unique_id=937868165]
+[node name="BodyPanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer" unique_id=957679804]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer" unique_id=1662455191]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer" unique_id=2001510956]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EntriesContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer/VBoxContainer" unique_id=937868165]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer/VBoxContainer" unique_id=1662455191]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="AddNewEntryButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/PanelContainer/VBoxContainer/MarginContainer" unique_id=672629911]
+[node name="AddNewEntryButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer/VBoxContainer/MarginContainer" unique_id=672629911]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 80)
