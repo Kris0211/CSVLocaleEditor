@@ -52,6 +52,9 @@ var __ur: EditorUndoRedoManager
 
 @onready var _header_scroll := %HeaderScrollContainer as ScrollContainer
 @onready var _body_scroll := %BodyScrollContainer as ScrollContainer
+
+@onready var _header_panel := %HeaderPanelContainer as PanelContainer
+@onready var _body_panel := %BodyPanelContainer as PanelContainer
 #endregion
 
 #region ENGINE_CALLBACKS
@@ -62,6 +65,17 @@ func _ready() -> void:
 	key_event.ctrl_pressed = true
 	key_event.command_or_control_autoremap = true
 	_save_shortcut.events = [key_event]
+	
+	# Setup theme
+	var _sbox := get_theme_stylebox(&"panel", &"EditorInspector").duplicate()
+	_body_panel.add_theme_stylebox_override(&"panel", _sbox)
+	
+	var _sboxflat := _sbox.duplicate() as StyleBoxFlat
+	if _sboxflat:
+		_sboxflat.bg_color = _sboxflat.bg_color.darkened(0.12)
+		_header_panel.add_theme_stylebox_override(&"panel", _sboxflat)
+	else: # Fallback
+		_header_panel.add_theme_stylebox_override(&"panel", _sbox)
 	
 	# Setup signal connections
 	_create_button.pressed.connect(_on_create_pressed)

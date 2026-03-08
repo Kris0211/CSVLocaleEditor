@@ -36,9 +36,10 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	var _stylebox := StyleBoxFlat.new()
-	_stylebox.bg_color = Color("181818ff")
-	add_theme_stylebox_override(&"panel", _stylebox)
+	var _sbox := get_theme_stylebox(&"panel", &"EditorInspector")\
+			.duplicate() as StyleBoxFlat
+	_sbox.bg_color = _sbox.bg_color.darkened(0.15)
+	add_theme_stylebox_override(&"panel", _sbox)
 	
 	button.pressed.connect(request_deletion)
 

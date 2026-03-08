@@ -15,3 +15,5 @@ dest_files=["res://examples/items.en.translation", "res://examples/items.es.tran
 
 compress=true
 delimiter=0
+unescape_keys=false
+unescape_translations=true
