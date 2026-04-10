@@ -82,7 +82,7 @@ func _register_settings():
 	
 	_add_setting(
 		"key_column_width",
-		600,
+		500,
 		TYPE_INT,
 		PROPERTY_HINT_RANGE,
 		"80,1200,5"
