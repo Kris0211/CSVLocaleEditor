@@ -7,7 +7,7 @@ signal save_finished(success: bool)
 
 const _CURRENT_EDIT_TEXT: String = "Currently open: "
 const _DATA_DIR: String = "res://"
-var _CUR_OPEN_FILE_PATH: String
+var _cur_file_path: String
 
 const KEY_COLUMN_INDEX: int = 1
 
@@ -228,7 +228,7 @@ func _create_new_table() -> void:
 	_current_edit_label.set_visible(true)
 	_current_edit_label.set_text(_CURRENT_EDIT_TEXT + "<unsaved>")
 	_dirty = true
-	_CUR_OPEN_FILE_PATH = ""
+	_cur_file_path = ""
 
 
 func _save_and_create() -> void:
@@ -542,7 +542,7 @@ func _handle_load_request(p_path: String = "") -> void:
 
 
 func _load_csv(p_path: String) -> Error:
-	_CUR_OPEN_FILE_PATH = p_path
+	_cur_file_path = p_path
 	var _file = FileAccess.open(p_path, FileAccess.READ)
 	if _file == null:
 		var _err: Error = _file.get_open_error()
@@ -564,10 +564,10 @@ func _load_csv(p_path: String) -> Error:
 
 #region SAVING
 func _on_save_pressed() -> void:
-	if _CUR_OPEN_FILE_PATH == "":
+	if _cur_file_path == "":
 		_on_save_as_pressed()
 	else:
-		_save_csv(_CUR_OPEN_FILE_PATH)
+		_save_csv(_cur_file_path)
 		save_finished.emit(true)
 
 
@@ -584,7 +584,7 @@ func _on_save_as_pressed() -> void:
 	)
 
 func _save_csv(p_path: String) -> Error:
-	_CUR_OPEN_FILE_PATH = p_path
+	_cur_file_path = p_path
 	_current_edit_label.set_text(_CURRENT_EDIT_TEXT + p_path.get_file())
 	var _file = FileAccess.open(p_path, FileAccess.WRITE)
 	if _file == null:
