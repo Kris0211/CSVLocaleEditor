@@ -7,6 +7,7 @@ signal save_finished(success: bool)
 
 const _CURRENT_EDIT_TEXT: String = "Currently open: "
 const _DATA_DIR: String = "res://"
+var _CUR_OPEN_FILE_PATH: String
 
 const KEY_COLUMN_INDEX: int = 1
 
@@ -21,8 +22,10 @@ static var DELIM: String = ProjectSettings.get_setting(
 var _dirty: bool = false:
 	set(value):
 		_dirty = value
-		if !_current_edit_label.text.ends_with(" (*)"):
+		if _dirty and !_current_edit_label.text.ends_with(" (*)"):
 			_current_edit_label.text += " (*)"
+		if !_dirty and _current_edit_label.text.ends_with(" (*)"):
+			_current_edit_label.text = _current_edit_label.text.left(-4)
 
 var _popup: EditorNewLocaleWindow
 var _header_data: PackedStringArray
@@ -37,6 +40,7 @@ var __ur: EditorUndoRedoManager
 @onready var _create_button := %CreateButton as Button
 @onready var _load_button := %LoadButton as Button
 @onready var _save_button := %SaveButton as Button
+@onready var _save_as_button: Button = %SaveAsButton
 
 @onready var _current_edit_label := %CurrentEditLabel as Label
 
@@ -81,6 +85,7 @@ func _ready() -> void:
 	_create_button.pressed.connect(_on_create_pressed)
 	_load_button.pressed.connect(_on_load_pressed)
 	_save_button.pressed.connect(_on_save_pressed)
+	_save_as_button.pressed.connect(_on_save_as_pressed)
 	_search_bar.text_changed.connect(_on_search_performed)
 	_word_wrap_toggle.toggled.connect(_on_word_wrap_toggled)
 	_new_code_button.pressed.connect(_on_add_locale_button_pressed)
@@ -98,6 +103,7 @@ func _exit_tree() -> void:
 	_create_button.pressed.disconnect(_on_create_pressed)
 	_load_button.pressed.disconnect(_on_load_pressed)
 	_save_button.pressed.disconnect(_on_save_pressed)
+	_save_as_button.pressed.disconnect(_on_save_as_pressed)
 	_word_wrap_toggle.toggled.disconnect(_on_word_wrap_toggled)
 	_search_bar.text_changed.disconnect(_on_search_performed)
 	_new_code_button.pressed.disconnect(_on_add_locale_button_pressed)
@@ -171,6 +177,7 @@ func _populate_editor(p_locale_table: EditorLocaleTable) -> void:
 	_clear_editor()
 	_new_code_button.set_disabled(false)
 	_save_button.set_disabled(false)
+	_save_as_button.set_disabled(false)
 	
 	_header_data = p_locale_table.header_data
 	for code: String in _header_data:
@@ -221,6 +228,7 @@ func _create_new_table() -> void:
 	_current_edit_label.set_visible(true)
 	_current_edit_label.set_text(_CURRENT_EDIT_TEXT + "<unsaved>")
 	_dirty = true
+	_CUR_OPEN_FILE_PATH = ""
 
 
 func _save_and_create() -> void:
@@ -534,6 +542,7 @@ func _handle_load_request(p_path: String = "") -> void:
 
 
 func _load_csv(p_path: String) -> Error:
+	_CUR_OPEN_FILE_PATH = p_path
 	var _file = FileAccess.open(p_path, FileAccess.READ)
 	if _file == null:
 		var _err: Error = _file.get_open_error()
@@ -555,6 +564,14 @@ func _load_csv(p_path: String) -> Error:
 
 #region SAVING
 func _on_save_pressed() -> void:
+	if _CUR_OPEN_FILE_PATH == "":
+		_on_save_as_pressed()
+	else:
+		_save_csv(_CUR_OPEN_FILE_PATH)
+		save_finished.emit(true)
+
+
+func _on_save_as_pressed() -> void:
 	var _file_dialog := _show_file_dialog(
 		_DATA_DIR,
 		PackedStringArray(["*.csv ; CSV Translation File"]),
@@ -567,6 +584,8 @@ func _on_save_pressed() -> void:
 	)
 
 func _save_csv(p_path: String) -> Error:
+	_CUR_OPEN_FILE_PATH = p_path
+	_current_edit_label.set_text(_CURRENT_EDIT_TEXT + p_path.get_file())
 	var _file = FileAccess.open(p_path, FileAccess.WRITE)
 	if _file == null:
 		var _err: Error = _file.get_open_error()
