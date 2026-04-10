@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://caxkgfy4f7c8n" path="res://addons/csvedit/csv_locale_editor.gd" id="1_cgmhc"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cgmhc"]
+
 [node name="CSVLocaleEditor" type="PanelContainer" unique_id=1129528086]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,18 +34,25 @@ layout_mode = 2
 [node name="CreateButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=991789228]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Create Empty Table"
+text = "New"
 
 [node name="LoadButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=476635302]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Load CSV Table"
+text = "Open
+"
 
 [node name="SaveButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1343349413]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "Save CSV Table"
+text = "Save"
+
+[node name="SaveAsButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1719036253]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Save As"
 
 [node name="CurrentEditLabel" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1055037446]
 unique_name_in_owner = true
@@ -95,6 +105,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cgmhc")
 
 [node name="HeaderScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/HeaderPanelContainer" unique_id=1514094117]
 unique_name_in_owner = true
@@ -126,6 +137,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cgmhc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer" unique_id=2001510956]
 layout_mode = 2
