@@ -7,7 +7,6 @@ signal save_finished(success: bool)
 
 const _CURRENT_EDIT_TEXT: String = "Currently open: "
 const _DATA_DIR: String = "res://"
-var _cur_file_path: String
 
 const KEY_COLUMN_INDEX: int = 1
 
@@ -27,10 +26,14 @@ var _dirty: bool = false:
 		if !_dirty and _current_edit_label.text.ends_with(" (*)"):
 			_current_edit_label.text = _current_edit_label.text.left(-4)
 
+# Path to currently edited CSV file.
+var _cur_file_path: String
+
 var _popup: EditorNewLocaleWindow
 var _header_data: PackedStringArray
 
 var _save_shortcut := Shortcut.new()
+var _save_as_shortcut := Shortcut.new()
 
 # Any methods prefixed with two underscores are for UndoRedo calls ONLY.
 var __ur: EditorUndoRedoManager
@@ -64,11 +67,18 @@ var __ur: EditorUndoRedoManager
 #region ENGINE_CALLBACKS
 func _ready() -> void:
 	# Setup shortcut
-	var key_event = InputEventKey.new()
-	key_event.keycode = KEY_S
-	key_event.ctrl_pressed = true
-	key_event.command_or_control_autoremap = true
-	_save_shortcut.events = [key_event]
+	var key_event_save = InputEventKey.new()
+	key_event_save.keycode = KEY_S
+	key_event_save.ctrl_pressed = true
+	key_event_save.command_or_control_autoremap = true
+	_save_shortcut.events = [key_event_save]
+	
+	var key_event_save_as = InputEventKey.new()
+	key_event_save_as.keycode = KEY_S
+	key_event_save_as.ctrl_pressed = true
+	key_event_save_as.shift_pressed = true
+	key_event_save_as.command_or_control_autoremap = true
+	_save_as_shortcut.events = [key_event_save_as]
 	
 	# Setup theme
 	var _sbox := get_theme_stylebox(&"panel", &"EditorInspector").duplicate()
@@ -115,13 +125,17 @@ func _exit_tree() -> void:
 func _shortcut_input(event: InputEvent) -> void:
 	# Accept shortcuts only when in csvedit view
 	if is_visible_in_tree() \
-			&& _save_shortcut.matches_event(event) \
 			&& event.is_pressed() \
 			&& !event.is_echo() \
 			&& !_header_data.is_empty(): # empty header data = no file edited
-		_on_save_pressed()
-		accept_event()
-		get_viewport().set_input_as_handled()
+		if _save_shortcut.matches_event(event):
+			_on_save_pressed()
+			accept_event()
+			get_viewport().set_input_as_handled()
+		elif _save_as_shortcut.matches_event(event):
+			_on_save_as_pressed()
+			accept_event()
+			get_viewport().set_input_as_handled()
 #endregion
 
 #region API
@@ -582,6 +596,7 @@ func _on_save_as_pressed() -> void:
 		(func() -> void:
 			save_finished.emit(false))
 	)
+
 
 func _save_csv(p_path: String) -> Error:
 	_cur_file_path = p_path
