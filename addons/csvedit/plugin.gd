@@ -66,7 +66,7 @@ func _edit(resource: Object) -> void:
 func _register_settings():
 	_add_setting(
 		"entry_width",
-		300,
+		400,
 		TYPE_INT,
 		PROPERTY_HINT_RANGE,
 		"90,1200,5"
@@ -82,10 +82,10 @@ func _register_settings():
 	
 	_add_setting(
 		"key_column_width",
-		500,
+		400,
 		TYPE_INT,
 		PROPERTY_HINT_RANGE,
-		"80,1200,5"
+		"90,1200,5"
 	)
 	
 	_add_setting(
