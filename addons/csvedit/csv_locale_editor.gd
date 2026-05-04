@@ -73,11 +73,8 @@ func _ready() -> void:
 	key_event_save.command_or_control_autoremap = true
 	_save_shortcut.events = [key_event_save]
 	
-	var key_event_save_as = InputEventKey.new()
-	key_event_save_as.keycode = KEY_S
-	key_event_save_as.ctrl_pressed = true
+	var key_event_save_as = key_event_save.duplicate()
 	key_event_save_as.shift_pressed = true
-	key_event_save_as.command_or_control_autoremap = true
 	_save_as_shortcut.events = [key_event_save_as]
 	
 	# Setup theme
