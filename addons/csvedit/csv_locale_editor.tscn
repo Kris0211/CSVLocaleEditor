@@ -159,7 +159,6 @@ theme_override_constants/margin_bottom = 4
 
 [node name="AddNewEntryButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer/BodyScrollContainer/BodyPanelContainer/VBoxContainer/MarginContainer" unique_id=672629911]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_vertical = 8
