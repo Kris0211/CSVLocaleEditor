@@ -1,6 +1,7 @@
+@tool
+## @deprecated: Deprecated in 4.6 as CSV files now open in script view.
 ## CSV as imported Resource. 
 ## Used internally by this tool's [ResourceLoader].
-@tool
 class_name EditorLocaleTable extends Resource
 
 ## Header data, corresponding to first line inside CSV file

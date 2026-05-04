@@ -4,8 +4,9 @@ class_name EditorTranslationsPlugin extends EditorPlugin
 const PLUGIN_NAME := "Translations"
 #const PLUGIN_ICON := null
 const SETTINGS_PREFIX := "addons/translations_plugin/"
-const MAIN_PANEL := preload("res://addons/csvedit/csv_locale_editor.tscn")
+const LAST_EDITED_KEY := SETTINGS_PREFIX + "last_edited_file_path"
 
+const MAIN_PANEL := preload("res://addons/csvedit/csv_locale_editor.tscn")
 var _main_panel_instance: EditorCSVLocaleScreen = null
 
 
@@ -63,6 +64,12 @@ func _edit(resource: Object) -> void:
 
 
 #region PROJECT_SETTINGS
+static func is_auto_load_enabled() -> bool:
+	var has_key := SETTINGS_PREFIX + "auto_load_last_edited_file"
+	return ProjectSettings.has_setting(has_key) \
+			&& ProjectSettings.get_setting(LAST_EDITED_KEY)
+
+
 func _register_settings():
 	_add_setting(
 		"entry_width",
@@ -94,6 +101,21 @@ func _register_settings():
 		TYPE_STRING
 	)
 	
+	_add_setting(
+		"auto_load_last_edited_file",
+		true,
+		TYPE_BOOL
+	)
+	
+	_add_setting(
+		"last_edited_file_path",
+		"",
+		TYPE_STRING,
+		PROPERTY_HINT_FILE_PATH,
+		"",
+		false
+	)
+	
 	ProjectSettings.save()
 
 
@@ -102,21 +124,21 @@ func _add_setting(
 	p_default: Variant,
 	p_type: Variant.Type,
 	p_hint: PropertyHint = PROPERTY_HINT_NONE, 
-	p_hint_string: String = ""
+	p_hint_string: String = "",
+	p_is_basic := true
 ) -> void:
 	var path := SETTINGS_PREFIX + p_name
 	
 	if !ProjectSettings.has_setting(path):
 		ProjectSettings.set_setting(path, p_default)
 		ProjectSettings.set_initial_value(path, p_default)
-		ProjectSettings.set_as_basic(path, true)
-	
-	ProjectSettings.add_property_info({
-		"name": path,
-		"type": p_type,
-		"hint": p_hint,
-		"hint_string": p_hint_string
-	})
+		ProjectSettings.set_as_basic(path, p_is_basic)
+		ProjectSettings.add_property_info({
+			"name": path,
+			"type": p_type,
+			"hint": p_hint,
+			"hint_string": p_hint_string
+		})
 
 
 func _clear_settings() -> void:
@@ -124,6 +146,8 @@ func _clear_settings() -> void:
 	ProjectSettings.clear(SETTINGS_PREFIX + "entry_height")
 	ProjectSettings.clear(SETTINGS_PREFIX + "key_column_width")
 	ProjectSettings.clear(SETTINGS_PREFIX + "csv_delimiter")
+	ProjectSettings.clear(SETTINGS_PREFIX + "auto_load_last_edited_file")
+	ProjectSettings.clear(SETTINGS_PREFIX + "last_edited_file_path")
 	ProjectSettings.save()
 
 

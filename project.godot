@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+translations_plugin/last_edited_file_path="res://examples/items.csv"
+
 [application]
 
 config/name="csvedit"

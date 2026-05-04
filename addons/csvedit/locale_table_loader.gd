@@ -1,4 +1,5 @@
 @tool
+## @deprecated: Deprecated in 4.6 as CSV files now open in script view
 ## A loader for CSV files for tool's internal use.
 class_name EditorLocaleTableLoader extends ResourceFormatLoader
 

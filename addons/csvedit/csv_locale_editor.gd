@@ -99,6 +99,13 @@ func _ready() -> void:
 	_new_entry_button.pressed.connect(_on_new_entry_pressed)
 	_header_scroll.get_h_scroll_bar().value_changed.connect(_on_header_h_scroll)
 	_body_scroll.get_h_scroll_bar().value_changed.connect(_on_body_h_scroll)
+	
+	# Load last edited file if required
+	if EditorTranslationsPlugin.is_auto_load_enabled():
+		var path := ProjectSettings.get_setting(
+			EditorTranslationsPlugin.LAST_EDITED_KEY)
+		if !path.is_empty():
+			_load_csv(path)
 
 
 func _exit_tree() -> void:
@@ -199,9 +206,10 @@ func _populate_editor(p_locale_table: EditorLocaleTable) -> void:
 
 
 func _clear_editor() -> void:
-	__ur.clear_history()
-	__ur.create_action("Load new CSV table")
-	__ur.commit_action()
+	if __ur:
+		__ur.clear_history()
+		__ur.create_action("Load new CSV table")
+		__ur.commit_action()
 	
 	for c: Node in _code_labels_container.get_children():
 		if c is EditorCodeLabel:
@@ -570,6 +578,9 @@ func _load_csv(p_path: String) -> Error:
 	_current_edit_label.visible = true
 	_current_edit_label.set_text(_CURRENT_EDIT_TEXT + p_path.get_file())
 	
+	# Store last loaded CSV file as "last edited file"
+	ProjectSettings.set_setting(EditorTranslationsPlugin.LAST_EDITED_KEY, 
+			_cur_file_path)
 	return Error.OK
 #endregion
 
