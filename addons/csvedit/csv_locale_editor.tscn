@@ -5,7 +5,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cgmhc"]
 
 [node name="CSVLocaleEditor" type="PanelContainer" unique_id=1129528086]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -45,21 +44,18 @@ text = "Open
 [node name="SaveButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1343349413]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
 text = "Save"
 
 [node name="SaveAsButton" type="Button" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1719036253]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
 text = "Save As"
 
 [node name="CurrentEditLabel" type="Label" parent="VBoxContainer/RibbonContainer/MarginContainer/HBoxContainer" unique_id=1055037446]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 10
-text = "Currently open: "
+text = "Currently open: items.csv"
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/RibbonContainer" unique_id=1275989137]
 layout_mode = 2
@@ -124,7 +120,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add New Locale"
-disabled = true
 text = "+"
 
 [node name="BodyScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=1214839504]
